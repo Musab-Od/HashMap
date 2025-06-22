@@ -1,0 +1,42 @@
+import js from '@eslint/js';
+import globals from 'globals';
+import { defineConfig } from 'eslint/config';
+import eslintPluginImport from 'eslint-plugin-import';
+import eslintPluginPrettier from 'eslint-plugin-prettier';
+import eslintConfigPrettier from 'eslint-config-prettier';
+
+export default defineConfig([
+  {
+    files: ['**/*.{js,mjs,cjs}'],
+    plugins: { js },
+    extends: ['js/recommended'],
+  },
+  {
+    files: ['**/*.{js,mjs,cjs}'],
+    languageOptions: { globals: globals.browser },
+  },
+  {
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+    },
+    rules: {
+      'prettier/prettier': 'error', // Treat Prettier formatting issues as ESLint errors
+      'no-unused-vars': 'warn', // Warn about unused variables
+      'no-console': 'off', // Allow console logs
+      'no-unused-expressions': 'off',
+      'import/no-unresolved': 'off',
+      'import/extensions': 'off',
+    },
+  },
+  eslintConfigPrettier,
+  {
+    plugins: {
+      prettier: eslintPluginPrettier,
+      import: eslintPluginImport,
+    },
+    rules: {
+      'prettier/prettier': 'error',
+    },
+  },
+]);
